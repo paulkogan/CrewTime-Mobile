@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {formatCurrency} from './ira-utils';
 
+
+
 const TransItem = (props) => {
 
       const {id, investor_name, investment_name, passthru_name, tt_name, t_wired_date, t_amount} = props.transResult;

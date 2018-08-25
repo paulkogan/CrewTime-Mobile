@@ -4,11 +4,11 @@ const path = require('path');
 const outputPath = path.join(__dirname, 'public');
 
 module.exports = {
-    entry: ["babel-polyfill","./src/app.js"],
+    entry: ["babel-polyfill","./src/ct.js"],
     mode: 'development',
     output: {
       path: path.join(__dirname, 'public'),
-      filename:  "bundle.js"
+      filename:  "ct-mobile-bundle.js"
 
     },
     module : {

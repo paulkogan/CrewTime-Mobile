@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import TransList from './t-list';
 import TransSearchBar from './t-search-bar';
+import {formatCurrency, getAPI_endpoint} from './ira-utils';
+const apiHost = getAPI_endpoint()
 
-//const apiHost = "http://ira-env.c7z5am6byq.us-east-2.elasticbeanstalk.com"
-const apiHost = "http://localhost:8081";
 
 class TransSearchPage extends Component {
 

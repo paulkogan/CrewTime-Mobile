@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import TTypesPulldown from './ttypes-pulldown'
 import EntitiesPulldown from './entities-pulldown'
-
-//const apiHost = require("./index.js").apiHost;
-const apiHost = "http://localhost:8081";
-const fetchURL_sendtrans = apiHost + "/process_add_transaction";
-//const apiHost = "http://ira-env.c7z5am6byq.us-east-2.elasticbeanstalk.com"
+import {formatCurrency, getAPI_endpoint} from './ira-utils';
+const apiHost = getAPI_endpoint()
 
 
 const sampleNewTrans = {
@@ -26,6 +22,7 @@ class NewTransactionForm extends Component  {
 
 constructor(props) {
     super(props);
+
     this.state = {
         amount: 0,
         notes: "",
@@ -44,8 +41,6 @@ constructor(props) {
     this.onChange = this.handleChange.bind(this);
 }
 
-
-//http://localhost:8081/api/getentitiesbytypes?params={%22types%22:[1,3]}
 
 
   async componentDidMount() {
@@ -79,9 +74,7 @@ constructor(props) {
   }
 
 
-
-
-
+//set state for any number of input field changes
 handleChange(event) {
           //const target = event.target;
           //const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -97,10 +90,11 @@ handleChange(event) {
 
 
 
-
-
 handleFormSubmit(event) {
       event.preventDefault();
+      const fetchURL_sendtrans = apiHost + "/process_add_transaction";
+
+
       let newTransObject = sampleNewTrans;
       newTransObject.amount = this.state.amount;
       newTransObject.notes = this.state.notes;
@@ -108,7 +102,7 @@ handleFormSubmit(event) {
       newTransObject.investment_entity_id = this.state.selectedDeal;
       newTransObject.investor_entity_id = this.state.selectedInvestor;
       newTransObject.passthru_entity_id = this.state.selectedPassthru;
-      
+
       console.log("Ready to submit new Transaction: "+JSON.stringify(newTransObject,null,4))
 
             fetch(fetchURL_sendtrans, {
@@ -179,7 +173,8 @@ handleFormSubmit(event) {
 
                         Amount:  &nbsp;
                         <input type="text" name="amount" size="8" value={this.state.amount} onChange={this.onChange} />
-                      <br/>
+                      <br/>  <br/>
+
                       <label>
                         Notes: &nbsp; &nbsp;
                         <input type="text" name="notes" value={this.state.notes} onChange={this.onChange} />

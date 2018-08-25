@@ -1,14 +1,15 @@
 {
-  "name": "indec",
+  "name": "React-Boiler-Plate-2",
   "version": "1.0.0",
-  "description": "Indecision",
+  "description": "React-Boiler",
   "main": "bundle.js",
   "scripts": {
     "live-server-NO-WEBPACK": "live-server ./public",
-    "babel-NO-WEBPACK": "babel ./src/indec_game.js --out-file ./public/runapp.js --presets=env,react --watch",
+    "babel solo": "babel ./src/app.js --out-file ./public/boiler-bundle.js --presets=env,react --watch",
     "webpack": "webpack --watch",
     "dev-server": "webpack-dev-server",
-    "start": "run-p dev-server",
+    "start": "run-p webpack dev-server",
+    "start-dev": "NODE_ENV=development run-p dev-server",
     "test": "jest"
   },
   "author": "",

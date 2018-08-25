@@ -3,10 +3,10 @@ import React, {} from "react";
 import {BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
 import Header, {} from "./header"
 import HomePage, {} from "./home-page.js"
-import TransSearchPage, {} from "./trans-search-page"
-import DealsListPage, {} from "./deals-list-page"
-import DealDetailsPage, {} from "./deal-details-page"
-import NewTransactionForm, {} from "./new-transaction-form"
+import WorkersListPage, {} from "./ct-workers-list-page"
+import TimeEntryPage , {} from "./ct-timeentry-page"
+
+
 
 
 const notFoundPage = () => {
@@ -27,13 +27,9 @@ const AppRouter = () => (
           <div className="center_container">
           <br/>
           <Switch>
-
               <Route path = "/" component = {HomePage} exact={true}/>
-              <Route path = "/transactions" component = {TransSearchPage} />
-              <Route path = "/deals" component = {DealsListPage} />
-              <Route path = "/ddtest" render={  ()=>  <DealDetailsPage nid={20}/> } />
-              <Route path = "/dealdetails/:id" component = {DealDetailsPage} />
-              <Route path = "/newtrans" component = {NewTransactionForm} />
+              <Route path = "/workers" component = {WorkersListPage} />
+              <Route path = "/timeentry/:link" component = {TimeEntryPage} />
               <Route component = {notFoundPage} />
           </Switch>
           </div>

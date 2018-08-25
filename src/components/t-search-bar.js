@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import EntityPicklist from './entity_picklist'
+import {formatCurrency, getAPI_endpoint} from './ira-utils';
+const apiHost = getAPI_endpoint()
 
-
-//const apiHost = require("./index.js").apiHost;
-const apiHost = "http://localhost:8081";
-//const apiHost = "http://ira-env.c7z5am6byq.us-east-2.elasticbeanstalk.com"
 
 
 class SearchBar extends Component{

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {formatCurrency} from './ira-utils';
+import {formatCurrency} from './ct-utils';
 
 
 

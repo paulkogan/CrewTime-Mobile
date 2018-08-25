@@ -1,10 +1,24 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-
+import TimeEntryForm from './ct-time-form'
 
 
 import {formatCurrency, getAPI_endpoint} from './ct-utils';
 const apiHost = getAPI_endpoint()
+const lodash = require('lodash');
+
+function getTodaysDate() {
+
+          var today = new Date();
+          var dd = today.getDate();
+          var mm = today.getMonth()+1; //January is 0!
+          var yyyy = today.getFullYear();
+          if (dd<10){  dd='0'+dd }
+          if(mm<10){   mm='0'+mm }
+          today = mm+'-'+dd+'-'+yyyy;
+          return today
+}
+
 
 
 class TimeEntryPage extends Component {
@@ -16,7 +30,8 @@ class TimeEntryPage extends Component {
           this.state = {
                 worker_link: null,
                 selected_worker: {},
-                all_properties: []
+                all_properties: [],
+                work_date: null
 
          }
      }
@@ -25,13 +40,13 @@ class TimeEntryPage extends Component {
 async componentDidMount ()  {
 
 
-        console.log("URL deets:" + JSON.stringify(this.props.match))
-        //get entity id from route props (nid) if TESTING or from URL param if user
+
+        //console.log("URL deets:" + JSON.stringify(this.props.match))
         await this.setState({
-          worker_link: this.props.match ? this.props.match.params.link : (this.props.nlink ? this.props.nlink : null)
+          worker_link: this.props.match ? this.props.match.params.link : (this.props.nlink ? this.props.nlink : null),
+          work_date: getTodaysDate()
         });
 
-        const fetchURL_allprops = apiHost + "/api/getallproperties"
         const fetchURL_worker = apiHost + "/api/getworkerbylink/"+this.state.worker_link;
 
 
@@ -42,11 +57,7 @@ async componentDidMount ()  {
            .then(data =>  {
                   this.setState({ selected_worker: data})
             })
-           .then( () => fetch(fetchURL_allprops))
-           .then(results => results.json())
-           .then(data => this.setState({
-                  all_properties: data
-           }))
+
 
   } //CDM
 
@@ -55,13 +66,11 @@ async componentDidMount ()  {
   render() {
         return (
                           <div>
-                              {JSON.stringify(this.state.worker_link)}
+                              {this.state.work_date}
                                 <br />
-                              {JSON.stringify(this.state.selected_worker)}
+                              {this.state.selected_worker.first+" "+ this.state.selected_worker.last}
                               <br />
-                              {JSON.stringify(this.state.all_properties)}
-
-
+                              <TimeEntryForm />
                           </div>
 
 
@@ -71,26 +80,16 @@ async componentDidMount ()  {
 } //class
 
 
-                                //
-                                // {(this.state.deal_ownership.length >0) && <OwnershipComponent
-                                //         entityID = {this.state.target_entity_id}
-                                //         ownRows = {this.state.deal_ownership}
-                                //         ownTotals = {this.state.deal_own_totals}
-                                //
-                                // />}
-                                //   <br />
-                                //
-                                // {(this.state.deal_cap_calls.length >0) && <CapCallsComponent
-                                //         dealCapCalls = {this.state.deal_cap_calls}
-                                //
-                                // />}
-                                // <br />
+
+
+
+
 
 
 
 export default TimeEntryPage;
 
-//import DealFinancialsComponent from './d-financials-component'
+
 
 
 // <DealFinancialsComponent

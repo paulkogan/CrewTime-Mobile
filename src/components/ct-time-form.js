@@ -49,7 +49,9 @@ constructor(props) {
             }
 
     }) //map
-     await this.setState({ props_4picklist })
+    props_4picklist.splice(0, 0, {id:0, name: " -- Please Select -- "})
+
+    await this.setState({ props_4picklist })
 
 
   }
@@ -66,6 +68,26 @@ handleChange(event) {
             [name]: value
           });
           console.log("just set "+name+"  to  "+value)
+
+
+          if (name === "selected_prop_id") {
+              let propsWorkingCopy = this.state.all_properties
+              let selcted_property = propsWorkingCopy.find ((property) => {
+                            return property.id = parseInt(value)
+
+              })
+
+              console.log("Selected property is "+selcted_property.name)
+
+              this.setState({
+                units_4picklist: selcted_property.units,
+                selected_prop_name: selcted_property.name
+              });
+
+          }
+
+
+
 
 }
 
@@ -93,30 +115,59 @@ handleFormSubmit(event) {
 
 
   render() {
-        return (
-             <div>
-                <form onSubmit={this.onSubmit}>
 
 
-                      Building:
-                      <EntitiesPulldown
-                              itemList = {this.state.props_4picklist}
-                              selectedItem = {this.state.selected_prop_id}
-                              handleChangeCB = {this.onChange}
-                              target = {"selected_prop_id"}
-                      />
-                      <br/>
+    if (this.state.selected_prop_id === 0)   {
+
+                      return (
+                           <div>
+                                    Building:
+                                    <EntitiesPulldown
+                                            itemList = {this.state.props_4picklist}
+                                            selectedItem = {this.state.selected_prop_id}
+                                            handleChangeCB = {this.onChange}
+                                            target = {"selected_prop_id"}
+                                    />
+                                    <br/>
+
+                          </div>
+                        );
 
 
-                      <br/>
-                      <input type="submit" value="Submit" />
-                    </form>
-            </div>
+
+
+      } else {
+
+                    return (
+                         <div>
+
+
+                            <form onSubmit={this.onSubmit}>
+                                  Building:
+                                       {this.state.selected_prop_name}
+                                  <br/>
+                                  Unit:
+                                  <EntitiesPulldown
+                                          itemList = {this.state.units_4picklist}
+                                          selectedItem = {this.state.selected_unit_id}
+                                          handleChangeCB = {this.onChange}
+                                          target = {"selected_unit_id"}
+                                  />
+                                  <br/>
+
+
+                                  <br/>
+                                  <input type="submit" value="Submit" />
+                                </form>
+                        </div>
 
 
 
-          );
-   }
+                      );
+
+      } //if-ese
+
+   } //render
 
 
 

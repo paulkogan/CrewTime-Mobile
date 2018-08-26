@@ -15,7 +15,7 @@ function getTodaysDate() {
           var yyyy = today.getFullYear();
           if (dd<10){  dd='0'+dd }
           if(mm<10){   mm='0'+mm }
-          today = mm+'-'+dd+'-'+yyyy;
+          today = yyyy+'-'+mm+'-'+dd;
           return today
 }
 
@@ -70,7 +70,7 @@ async componentDidMount ()  {
                                 <br />
                               {this.state.selected_worker.first+" "+ this.state.selected_worker.last}
                               <br />
-                              <TimeEntryForm />
+                              <TimeEntryForm work_date={this.state.work_date} worker={this.state.selected_worker}/>
                           </div>
 
 

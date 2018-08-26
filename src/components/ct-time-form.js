@@ -41,7 +41,7 @@ constructor(props) {
   async componentDidMount() {
 
     let hoursBy30 = lodash.range(.5, 9, .5);
-    console.log("The hours are  "+JSON.stringify(hoursBy30)  )
+    //console.log("The hours are  "+JSON.stringify(hoursBy30)  )
     let hours_4picklist = hoursBy30.map((time) =>{
                     return {
                           id: time,
@@ -134,7 +134,7 @@ async handleChange(event) {
 
 
 
-handleFormSubmit(event) {
+async handleFormSubmit(event) {
       event.preventDefault();
 
       let newLocalTimeEntry = {
@@ -145,17 +145,67 @@ handleFormSubmit(event) {
                 unit_name: this.state.selected_unit_name
         }
 
-      console.log("Ready to submit new Transaction: "+JSON.stringify(newLocalTimeEntry,null,4))
+
 
        let timesArr = this.state.time_entries
        timesArr.push(newLocalTimeEntry)
 
 
+// Send TE to the DB
+
+//  let insertTEResults = await ctSQL.insertTimeEntry(newTimeEntry);
+
+
+      const fetchURL_sendTE = apiHost + "/process-web-newtime";
+      let newTimeEntry = {
+              worker_id : this.props.worker.id,
+              property_id : this.state.selected_prop_id,
+              unit_id : this.state.selected_unit_id,
+              work_date : this.props.work_date,
+              work_hours : this.state.selected_hour_id,
+              notes:  "from CT Mobile"
+      }
 
 
 
-       //add the time entrie and clear setting on the form
-       this.setState({
+      // Newtime2 - Raw from the Form WEB:
+      // {  "selcted_unit":"[ 6, \"Apt. 15-E\"]",
+      //   "work_date":"2018-08-25",
+      // "hours_worked":"4",
+      // "notes":"from web 4 hrs",
+      // "worker_id":"2",
+      // "worker_link":"lopez25",
+      // "selected_property_id":"2"}
+
+
+      // Newtime2 - Raw from the Form MOBILE:
+      // {"worker_id":1,
+      // "property_id":"3",
+      // "unit_id":"8",
+      // "work_date":"08-25-2018",
+      // "work_hours":"8.5",
+      // "notes":"from CT Mobile"}
+
+
+
+
+      console.log("Ready to POST new Time Entry "+JSON.stringify(newTimeEntry,null,4))
+
+      await fetch(fetchURL_sendTE, {
+                   method: "POST",
+                   body: JSON.stringify(newTimeEntry),
+                   headers: {
+                               'Accept': 'application/json',
+                               'Content-Type': 'application/json'
+                   }
+
+       })
+       .then( () => console.log("Posted new TimeEntry  "));
+
+
+
+       //add the time entrie and CLEAR setting on the form
+       await this.setState({
           time_entries: timesArr,
           selected_prop: null,
           selected_prop_id: 0,

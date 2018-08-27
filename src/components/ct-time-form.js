@@ -98,7 +98,7 @@ async handleChange(event) {
 
               //assignement by Value
               let unitsFromProp = selcted_property.units.slice()
-              unitsFromProp.splice(0, 0, {id:0, name: " -- Please Select A -- ", property_id:0})
+              unitsFromProp.splice(0, 0, {id:0, name: " -- Please Select -- ", property_id:0})
               this.setState({
                 units_4picklist: unitsFromProp,
                 selected_prop_name: selcted_property.name.slice(0,12),
@@ -228,10 +228,10 @@ async handleFormSubmit(event) {
     if (this.state.selected_prop_id === 0)   {
 
                       return (
-                        <div>
+                        <div className = "outer-div">
                            <div className = "items-list">
                                   <b>Add a New Work Time</b><br/>
-                                    Building:
+                                    Building:&nbsp;&nbsp;
                                     <EntitiesPulldown
                                             itemList = {this.state.props_4picklist}
                                             selectedItem = {this.state.selected_prop_id}
@@ -239,6 +239,7 @@ async handleFormSubmit(event) {
                                             target = {"selected_prop_id"}
                                     />
                                      <br/><br/><br/>
+
                            </div>
 
                            <div>
@@ -260,10 +261,10 @@ async handleFormSubmit(event) {
                             <div>
                                <div className = "items-list">
                                  <b>Add a New Work Time</b><br/>
-                                         Building:
+                                         Building:&nbsp;&nbsp;
                                               {this.state.selected_prop_name}
                                          <br/>
-                                         Unit:
+                                         Unit:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                          <EntitiesPulldown
                                                  itemList = {this.state.units_4picklist}
                                                  selectedItem = {this.state.selected_unit_id}
@@ -288,10 +289,10 @@ async handleFormSubmit(event) {
                       <div>
                          <div className = "items-list">
                               <b>Add a New Work Time</b><br/>
-                                  Building:
+                                  Building:&nbsp;&nbsp;
                                        {this.state.selected_prop_name}
                                   <br/>
-                                  Unit:
+                                  Unit:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                        {this.state.selected_unit_name}
                                   <br/>
 
@@ -320,21 +321,25 @@ async handleFormSubmit(event) {
                            <div className = "items-list">
                               <b>Add a New Work Time</b><br/>
                               <form onSubmit={this.onSubmit}>
-                                    Building:
+                                    Building:&nbsp;&nbsp;
                                          {this.state.selected_prop_name}
                                     <br/>
-                                    Unit:
+                                    Unit:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                          {this.state.selected_unit_name}
                                     <br/>
 
 
-                                    Hours Worked:
+                                    Hours Worked:&nbsp;
                                           {this.state.selected_hour_id} hours
                                     <br/>
 
 
                                     <br/>
-                                    <input type="submit" value="Add Work Time" />
+
+                                    <button type="submit" className="time-button" >Add Work Time</button>
+
+
+
                                   </form>
 
                           </div>

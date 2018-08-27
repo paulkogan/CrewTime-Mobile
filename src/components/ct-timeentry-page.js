@@ -65,12 +65,14 @@ async componentDidMount ()  {
 
   render() {
         return (
-                          <div>
+                          <div className = "outer-div">
+                              <div className = "indent-div">
                               {this.state.work_date}
-                                <br />
+                              <p className = "prom-name">
                               {this.state.selected_worker.first+" "+ this.state.selected_worker.last}
-                              <br />
+                              </p>
                               <TimeEntryForm work_date={this.state.work_date} worker={this.state.selected_worker}/>
+                              </div>
                           </div>
 
 

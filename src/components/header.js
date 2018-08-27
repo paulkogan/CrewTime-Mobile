@@ -5,7 +5,7 @@ import {BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
 const Header = () => (
   <header className="header">
         <div className="center_container">
-        <img width="75" src={"../../static/GP_Prop_logo_1.png"}/> Crew Time Mobile 4.4
+        <img width="75" src={"../../static/GP_Prop_logo_1.png"}/> &nbsp;Crew Time Mobile 4.4
         </div>
   </header>
 

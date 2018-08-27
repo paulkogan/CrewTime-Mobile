@@ -20,6 +20,42 @@ button:focus {
 
 
 
+.time-button {
+    background: white;
+    border: none;
+    border-bottom: 3px solid darken(navy, 20%);
+    border-right: 2px solid darken(navy, 20%);
+    margin-bottom: 5px;
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+    height: 40px;
+    width: 200px;
+    border-radius:4px;
+    cursor: pointer;
+
+}
+
+.big-button:active {
+    background: slateblue;
+    border-bottom: none;
+    border-right: none;
+    color:white;
+    cursor:pointer;
+    outline:none;
+    box-shadow: inset 3px 3px 3px navy;
+}
+
+
+
+.time-button:hover {
+    background-color: darkslategrey;
+    color: white;
+}
+
+
+
+
 .center_container {
   max-width: 750px;
   margin: 0 auto;
@@ -36,6 +72,69 @@ button:focus {
   margin-left: 0px;
 
 }
+
+
+.items-list {
+    border-style: solid;
+    border-width: 1px;
+    padding-top: 20px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    position: relative;
+}
+
+
+.outer-div {
+     margin: 0 auto;
+}
+
+.indent-div {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.prom-name {
+  font-size: 20px;
+  font-weight: 600;
+
+}
+
+.div-border {
+    border-style: solid;
+    border-width: 5px;
+    padding-top: 20px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+
+.div-border-thin {
+    border-style: solid;
+    border-width: 2px;
+    padding-top: 20px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+
+
+    select {
+       font-size: 16px;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 .header__title {
@@ -57,6 +156,8 @@ button:focus {
     text-align: left;
     margin-left: 0px;
 }
+
+
 
 
 .pick-list {
@@ -81,40 +182,6 @@ button:focus {
 
 
 }
-
-
-.items-list {
-    border-style: solid;
-    border-width: 1px;
-    padding-top: 20px;
-    padding-right: 10px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-    position: relative;
-}
-
-
-
-
-.div-border {
-    border-style: solid;
-    border-width: 5px;
-    padding-top: 20px;
-    padding-right: 10px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-}
-
-.div-border-thin {
-    border-style: solid;
-    border-width: 2px;
-    padding-top: 20px;
-    padding-right: 10px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-}
-
-
 
 
 
@@ -149,14 +216,6 @@ button:focus {
 }
 
 
-.div-border {
-    border-style: solid;
-    border-width: 5px;
-    padding-top: 20px;
-    padding-right: 10px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-}
 
 .exp-total {
     padding-bottom: 10px;

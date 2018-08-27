@@ -41,7 +41,7 @@ const NewTimesList = (props) => {
 
 return (
         <div>
-          <b>Work Times Added Today</b>..... Total Hrs: {totalHours}
+          <b>Added Work Times</b>............ Total Hrs: {totalHours}
           <ul>
               {displayList}
           </ul>

@@ -16,7 +16,7 @@ export function formatCurrency (amount) {
 export function getAPI_endpoint() {
           //let current_ENV = process.env.NODE_ENV;
 
-        let current_ENV = 'dev';
+        let current_ENV = 'production';
       //let current_ENV = 'development';
 
         if (current_ENV  === 'production')  {

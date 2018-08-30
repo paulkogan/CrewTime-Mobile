@@ -7,7 +7,7 @@ import {formatCurrency, getAPI_endpoint} from './ct-utils';
 
 const apiHost = getAPI_endpoint()
 const lodash = require('lodash');
-const menuPrompt = " -- Pick -- "
+const menuPrompt = "- Pick -"
 
 
 class TimeEntryGrid extends Component  {
@@ -218,6 +218,7 @@ async handleFormSubmit(event) {
           selected_unit_id: 0,
           selected_unit_name: "",
           selected_hour_id: 0,
+          total_hours:0
         });
 
 
@@ -225,16 +226,26 @@ async handleFormSubmit(event) {
 
 
 
-deleteTE(teIndex) {
+async deleteTE(teIndex) {
       event.preventDefault();
 
 
       let timesArr = this.state.time_entries
       let removed = timesArr.splice(teIndex,1)
       console.log("Deleted   "+removed[0].property_name+ "  "+removed[0].unit_name +"\n")
-      this.setState({
-         time_entries: timesArr
-       });
+
+      let allHours = 0;
+      timesArr.forEach( (te) => {
+                  allHours   += parseFloat(te.work_hours)
+       })
+
+       this.setState({
+          time_entries: timesArr,
+          total_hours: allHours
+        });
+
+
+
 
 
 } //deleteTE

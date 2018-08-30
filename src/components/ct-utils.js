@@ -2,6 +2,41 @@ import React, {Component} from 'react';
 
 
 
+
+export function getTodaysDate() {
+          var today = new Date();
+          var dd = today.getDate();
+          var mm = today.getMonth()+1; //January is 0!
+          var yyyy = today.getFullYear();
+          if (dd<10){  dd='0'+dd }
+          if(mm<10){   mm='0'+mm }
+          let todaysDate = yyyy+'-'+mm+'-'+dd;
+          return todaysDate
+}
+
+export function getCurrentTime() {
+          var today = new Date();
+          var hour = today.getHours();
+          var mins = today.getMinutes();
+          if(hour<10){   hour ='0'+hour}
+          if(mins<10){   mins ='0'+mins}
+          let currentTime =  hour+':'+mins
+          return currentTime
+}
+
+
+export function getTimeZoneOffset() {
+          let today = new Date();
+          let timeZoneOffset = today.getTimezoneOffset()
+          //console.log("Raw Offset is " + timeZoneOffset)
+          let hoursOffset = parseInt(timeZoneOffset/60)
+          return hoursOffset
+}
+
+
+
+
+
 export function formatCurrency (amount) {
             if (!amount) return "$0.00"
 

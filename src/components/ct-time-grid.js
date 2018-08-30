@@ -2,10 +2,19 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import EntitiesPulldown from './entities-pulldown'
 import NewTimesList from './ct-newtimes-list'
-import {formatCurrency, getAPI_endpoint} from './ct-utils';
+import {formatCurrency,
+       getAPI_endpoint,
+       getTodaysDate,
+       getCurrentTime,
+       getTimeZoneOffset
+     } from './ct-utils';
 
 
-const apiHost = getAPI_endpoint()
+const apiHost = getAPI_endpoint();
+const todaysDate = getTodaysDate();
+const currentTime = getCurrentTime();
+const timeZoneOffset = getTimeZoneOffset()
+
 const lodash = require('lodash');
 const menuPrompt = "- Pick -"
 
@@ -179,36 +188,39 @@ async handleFormSubmit(event) {
 
 
       const fetchURL_sendTE = apiHost + "/process-web-newtime";
-      let newTimeEntry = {
-              worker_id : this.props.worker.id,
-              property_id : this.state.selected_prop_id,
-              unit_id : this.state.selected_unit_id,
-              work_date : this.props.work_date,
-              work_hours : this.state.selected_hour_id,
-              notes:  "from CT Mobile Grid"
-      }
+
+      let timesArr = this.state.time_entries
+      timesArr.forEach( async (te) => {
+                //console.log("Working on:  "+ JSON.stringify(te,null,4) +"\n")
+                let newTimeEntry = {
+                        worker_id : this.props.worker.id,
+                        property_id : te.property_id,
+                        unit_id : te.unit_id,
+                        work_date : this.props.work_date,
+                        work_hours : te.work_hours,
+                        notes:  "from CT Mobile Grid on "+todaysDate+" at "+currentTime+" GMT +"+timeZoneOffset
+                }
+
+                console.log("Ready to POST new Time Entry "+JSON.stringify(newTimeEntry,null,4))
 
 
+                fetch(fetchURL_sendTE, {
+                             method: "POST",
+                             body: JSON.stringify(newTimeEntry),
+                             headers: {
+                                         'Accept': 'application/json',
+                                         'Content-Type': 'application/json'
+                             }
 
-      console.log("Ready to POST new Time Entry "+JSON.stringify(newTimeEntry,null,4))
+                 })
+                 .then( () => console.log("Posted new TimeEntry  "));
 
-      // await fetch(fetchURL_sendTE, {
-      //              method: "POST",
-      //              body: JSON.stringify(newTimeEntry),
-      //              headers: {
-      //                          'Accept': 'application/json',
-      //                          'Content-Type': 'application/json'
-      //              }
-      //
-      //  })
-      //  .then( () => console.log("Posted new TimeEntry  "));
+      })  //forEach
 
-
-
-       //add the time entrie and CLEAR setting on the form
+       //CLEAR State
 
 
-       await this.setState({
+       this.setState({
           time_entries: [],
           selected_prop: null,
           selected_prop_id: 0,
@@ -338,7 +350,7 @@ async deleteTE(teIndex) {
                            <div className="div-center">
                            {this.state.total_hours>0 &&
                                  <button className="time-button"
-                                      onClick={this.onSubmit}>Submit the {this.state.time_entries.length} Work Time(s)
+                                      onClick={this.onSubmit}>Submit {this.state.time_entries.length} Work Time(s)
                                 </button>}
                            </div>
                            <br/>

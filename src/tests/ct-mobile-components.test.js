@@ -1,13 +1,13 @@
 import React, {} from "react";
 //import {BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
-import DealDetailsPage, {} from "../components/deal-details-page"
+import TimeEntryPage, {} from "../components/ct-timeentry-page"
 import renderer from 'react-test-renderer';
 
 
 // use: npm test -- -u`
-it('renders Deal Page correctly', () => {
+it('renders Time EntryPage correctly', () => {
   const tree = renderer
-    .create(<DealDetailsPage nid={20}/>)
+    .create(<TimeEntryPage nlink={'kim99'}/>)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

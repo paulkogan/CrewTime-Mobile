@@ -9,8 +9,11 @@ const WorkerItem = (props) => {
       return (
 
                 <div>
-                      <Link to={timeLink}> {first + " " +last} </Link>
-                      <br/>
+                    <td  width="40%">  {first + " " +last} </td>
+                    <td  width="10%"> &nbsp; </td>
+                    <td width="20%"> <Link to={"/timeentry/"+ link}> {"Single Form"} </Link> </td>
+                    <td  width="10%"> &nbsp; </td>
+                    <td width="20%"> <Link to={"/timegrid/"+ link}> {"Grid"} </Link> </td>
                 </div>
 
       )
@@ -23,10 +26,17 @@ const WorkersList = (props) => {
   //create list of displayable dealactions
   const displayList= props.listOfWorkers.map(  (worker) => {
         return (
-            <WorkerItem
-                workerObj = {worker}
-                key = {worker.id}
-            />
+          <table id="simple_table" border = "0" width = "80%">
+              <tbody>
+               <tr>
+                      <WorkerItem
+                          workerObj = {worker}
+                          key = {worker.id}
+                      />
+                </tr>
+            </tbody>
+           </table>
+
         )
   });
 
@@ -43,3 +53,13 @@ return (
 }
 
 export default WorkersList;
+
+
+
+// <colgroup>
+// <col width="30%"/>
+// <col width="10%"/>
+// <col width="30%"/>
+// <col width="10%"/>
+// <col width="30%"/>
+// </colgroup>

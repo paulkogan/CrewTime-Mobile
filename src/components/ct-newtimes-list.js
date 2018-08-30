@@ -13,9 +13,20 @@ const TimeRow = (props) => {
       const {property_name, unit_name, work_hours} = props.timeEntry;
       return (
 
-                <div>
-                      {property_name} {unit_name} {"  . . .  "}{work_hours} hours
-                </div>
+               <tr>
+                      <td className="col-4"> {property_name} </td>
+                      <td className="col-3"> {unit_name} </td>
+                      <td className="col-3"> {work_hours} hrs </td>
+                      <td className="col-2">
+                      <button
+                              className = "small-button-remove"
+                              onClick={() => props.deleteTE(props.index)}
+                       > X </button>
+
+                      </td>
+                </tr>
+
+
 
       )
 
@@ -25,15 +36,30 @@ const TimeRow = (props) => {
 //component get props
 const NewTimesList = (props) => {
   //create list of displayable dealactions
-  let totalHours = 0
-  const displayList= props.time_entries.map(  (timeEntry) => {
-        totalHours += parseFloat(timeEntry.work_hours)
-        console.log("Adding "+timeEntry.work_hours+" for a total of"+totalHours)
+  //let totalHours = 0
+  const displayList= props.time_entries.map(  (timeEntry,index) => {
+        //totalHours += parseFloat(timeEntry.work_hours)
+        //console.log("sending "+timeEntry+" for a total of"+totalHours)
+
+
         return (
-            <TimeRow
-                timeEntry = {timeEntry}
-                key = {timeEntry.unit_id+parseInt((Math.random()*100000))}
-            />
+
+           <table className="g-table" key={index} width = "100%">
+              <tbody>
+
+                      <TimeRow
+                          timeEntry = {timeEntry}
+                          key = {index*parseInt((Math.random()*100000))}
+                          index = {index}
+                          deleteTE = {props.deleteTE}
+                      />
+
+
+                  </tbody>
+            </table>
+
+
+
         )
   });
 
@@ -41,10 +67,10 @@ const NewTimesList = (props) => {
 
 return (
         <div>
-          <b>Added Work Times</b>............ Total Hrs: {totalHours}
-          <ul>
+
               {displayList}
-          </ul>
+
+
         </div>
 
       )

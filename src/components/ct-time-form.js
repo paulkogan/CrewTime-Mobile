@@ -7,7 +7,7 @@ import {formatCurrency, getAPI_endpoint} from './ct-utils';
 
 const apiHost = getAPI_endpoint()
 const lodash = require('lodash');
-
+const menuPrompt = " -- Pick -- "
 
 
 class TimeEntryForm extends Component  {
@@ -34,6 +34,7 @@ constructor(props) {
 
     this.onSubmit = this.handleFormSubmit.bind(this);
     this.onChange = this.handleChange.bind(this);
+    this.deleteTE = this.deleteTE.bind(this);
 }
 
 
@@ -63,8 +64,8 @@ constructor(props) {
             }
 
     }) //map
-    props_4picklist.splice(0, 0, {id:0, name: " -- Please Select -- "})
-    hours_4picklist.splice(0, 0, {id:0, name: " -- Please Select -- "})
+    props_4picklist.splice(0, 0, {id:0, name: menuPrompt })
+    hours_4picklist.splice(0, 0, {id:0, name: menuPrompt })
 
     await this.setState({ props_4picklist, hours_4picklist })
 
@@ -96,9 +97,9 @@ async handleChange(event) {
 
               //do do units
 
-              //assignement by Value
+              //assignement by Value!!!
               let unitsFromProp = selcted_property.units.slice()
-              unitsFromProp.splice(0, 0, {id:0, name: " -- Please Select -- ", property_id:0})
+              unitsFromProp.splice(0, 0, {id:0, name: menuPrompt, property_id:0})
               this.setState({
                 units_4picklist: unitsFromProp,
                 selected_prop_name: selcted_property.name.slice(0,12),
@@ -125,6 +126,7 @@ async handleChange(event) {
               });
 
           } //SET PROP
+
 
 
 
@@ -168,26 +170,6 @@ async handleFormSubmit(event) {
 
 
 
-      // Newtime2 - Raw from the Form WEB:
-      // {  "selcted_unit":"[ 6, \"Apt. 15-E\"]",
-      //   "work_date":"2018-08-25",
-      // "hours_worked":"4",
-      // "notes":"from web 4 hrs",
-      // "worker_id":"2",
-      // "worker_link":"lopez25",
-      // "selected_property_id":"2"}
-
-
-      // Newtime2 - Raw from the Form MOBILE:
-      // {"worker_id":1,
-      // "property_id":"3",
-      // "unit_id":"8",
-      // "work_date":"08-25-2018",
-      // "work_hours":"8.5",
-      // "notes":"from CT Mobile"}
-
-
-
 
       console.log("Ready to POST new Time Entry "+JSON.stringify(newTimeEntry,null,4))
 
@@ -222,6 +204,21 @@ async handleFormSubmit(event) {
 
 
 
+deleteTE(teIndex) {
+      event.preventDefault();
+
+
+      let timesArr = this.state.time_entries
+      let removed = timesArr.splice(teIndex,1)
+      console.log("Deleted   "+removed[0].property_name+ "  "+removed[0].unit_name +"\n")
+      this.setState({
+         time_entries: timesArr
+       });
+
+
+} //deleteTE
+
+
   render() {
 
 
@@ -244,7 +241,9 @@ async handleFormSubmit(event) {
 
                            <div>
                               {(this.state.time_entries.length>0) &&
-                                <NewTimesList  time_entries={this.state.time_entries}
+                                <NewTimesList
+                                       time_entries={this.state.time_entries}
+                                       deleteTE={this.deleteTE}
                                />}
                             </div>
                         </div>
@@ -276,7 +275,9 @@ async handleFormSubmit(event) {
 
                                        <div>
                                           {(this.state.time_entries.length>0) &&
-                                            <NewTimesList  time_entries={this.state.time_entries}
+                                            <NewTimesList
+                                                   time_entries={this.state.time_entries}
+                                                   deleteTE={this.deleteTE}
                                            />}
                                         </div>
                                     </div>
@@ -309,7 +310,9 @@ async handleFormSubmit(event) {
 
                         <div>
                            {(this.state.time_entries.length>0) &&
-                             <NewTimesList  time_entries={this.state.time_entries}
+                             <NewTimesList
+                                    time_entries={this.state.time_entries}
+                                    deleteTE={this.deleteTE}
                             />}
                          </div>
                      </div>
@@ -346,7 +349,9 @@ async handleFormSubmit(event) {
 
                         <div>
                            {(this.state.time_entries.length>0) &&
-                             <NewTimesList  time_entries={this.state.time_entries}
+                             <NewTimesList
+                                    time_entries={this.state.time_entries}
+                                    deleteTE={this.deleteTE}
                             />}
                          </div>
                      </div>

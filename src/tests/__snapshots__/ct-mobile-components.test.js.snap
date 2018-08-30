@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Time EntryPage correctly 1`] = `
+<div
+  className="outer-div"
+>
+  <div
+    className="indent-div"
+  >
+    2018-08-27
+    <p
+      className="prom-name"
+    >
+      undefined undefined
+    </p>
+    <div
+      className="outer-div"
+    >
+      <div
+        className="items-list"
+      >
+        <b>
+          Add a New Work Time
+        </b>
+        <br />
+        Building:  
+        <div>
+          <select
+            name="selected_prop_id"
+            onChange={[Function]}
+            value={0}
+          />
+        </div>
+        <br />
+        <br />
+        <br />
+      </div>
+      <div />
+    </div>
+  </div>
+</div>
+`;

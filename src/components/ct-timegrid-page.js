@@ -2,23 +2,14 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import TimeEntryForm from './ct-time-form'
 import TimeEntryGrid from './ct-time-grid'
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
-
-import {formatCurrency, getAPI_endpoint} from './ct-utils';
+import {convertDate, getTodaysDate, formatCurrency, getAPI_endpoint} from './ct-utils';
 const apiHost = getAPI_endpoint()
 const lodash = require('lodash');
 
-function getTodaysDate() {
-
-          var today = new Date();
-          var dd = today.getDate();
-          var mm = today.getMonth()+1; //January is 0!
-          var yyyy = today.getFullYear();
-          if (dd<10){  dd='0'+dd }
-          if(mm<10){   mm='0'+mm }
-          today = yyyy+'-'+mm+'-'+dd;
-          return today
-}
 
 
 
@@ -32,14 +23,16 @@ class TimeGridPage extends Component {
                 worker_link: null,
                 selected_worker: {},
                 all_properties: [],
-                work_date: null
+                work_date: getTodaysDate()
 
          }
+         this.handleDayChange = this.handleDayChange.bind(this);
+
+
      }
 
 
 async componentDidMount ()  {
-
 
 
         //console.log("URL deets:" + JSON.stringify(this.props.match))
@@ -63,12 +56,29 @@ async componentDidMount ()  {
   } //CDM
 
 
+  handleDayChange(selectedDay) {
+
+     this.setState({
+          work_date : convertDate(selectedDay),
+          //selected_day: selectedDay
+     });
+   }
+
+
+
+
+
 
   render() {
+
         return (
                           <div className = "outer-div">
                               <div className = "indent-div">
-                              {this.state.work_date}
+                              <DayPickerInput
+                                      onDayChange={this.handleDayChange}
+                                      value = {this.state.work_date}
+                                      inputProps={{ className: "hidden-date-input" }}
+                                      />
                               <p className = "prom-name">
                               {this.state.selected_worker.first+" "+ this.state.selected_worker.last}
                               </p>
@@ -81,9 +91,6 @@ async componentDidMount ()  {
         ) //return
     } //render
 } //class
-
-
-
 
 
 

@@ -19,6 +19,18 @@ button:focus {
 }
 
 
+.hidden-date-input {
+      border: none;
+      background-color: lightslategrey;
+
+
+}
+
+.hidden-date-input:focus {
+  outline:0;
+}
+
+
 
 .time-button {
     background: white;

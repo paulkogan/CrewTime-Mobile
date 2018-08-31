@@ -6,7 +6,7 @@ import HomePage, {} from "./home-page.js"
 import WorkersListPage, {} from "./ct-workers-list-page"
 import TimeEntryPage, {} from "./ct-timeentry-page"
 import TimeGridPage, {} from "./ct-timegrid-page"
-
+import ChangeDateCal, {} from "./ct-change-date-calendar"
 
 
 const notFoundPage = () => {
@@ -31,6 +31,7 @@ const AppRouter = () => (
               <Route path = "/workers" component = {WorkersListPage} />
               <Route path = "/timeentry/:link" component = {TimeEntryPage} />
               <Route path = "/timegrid/:link" component = {TimeGridPage} />
+              <Route path = "/changedate" component = {ChangeDateCal} />
               <Route component = {notFoundPage} />
           </Switch>
           </div>

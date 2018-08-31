@@ -28,6 +28,7 @@
     "react": "^16.4.1",
     "react-addons-shallow-compare": "^15.6.2",
     "react-dates": "^17.1.1",
+    "react-day-picker": "^7.2.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

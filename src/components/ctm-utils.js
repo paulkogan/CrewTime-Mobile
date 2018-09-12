@@ -1,7 +1,29 @@
 import React, {Component} from 'react';
 
 
-export function convertDate(rawDate) {
+export function getVersion() {
+
+          return "5.6"
+
+}
+
+export function getAPI_endpoint() {
+          //let current_ENV = process.env.NODE_ENV;
+
+        let current_ENV = 'production';
+      //let current_ENV = 'development';
+
+        if (current_ENV  === 'production')  {
+                 return "http://crew-time.us-east-2.elasticbeanstalk.com"
+        } else {
+                 return "http://localhost:8081"
+        }
+
+} //function
+
+
+
+export function convertSimpleDate(rawDate) {
           var today = rawDate
           var dd = today.getDate();
           var mm = today.getMonth()+1; //January is 0!
@@ -54,19 +76,4 @@ export function formatCurrency (amount) {
             } else {
                return "($"+(-1*amount).toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")+")";
             }
-} //function
-
-
-export function getAPI_endpoint() {
-          //let current_ENV = process.env.NODE_ENV;
-
-        let current_ENV = 'production';
-      //let current_ENV = 'development';
-
-        if (current_ENV  === 'production')  {
-                 return "http://crew-time.us-east-2.elasticbeanstalk.com"
-        } else {
-                 return "http://localhost:8081"
-        }
-
 } //function

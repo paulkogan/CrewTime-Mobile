@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import WorkersList from './ct-workers-list'
-import {formatCurrency, getAPI_endpoint} from './ct-utils';
+import WorkersList from './ctm-workers-list'
+import {formatCurrency, getAPI_endpoint} from './ctm-utils';
 const apiHost = getAPI_endpoint()
 
 

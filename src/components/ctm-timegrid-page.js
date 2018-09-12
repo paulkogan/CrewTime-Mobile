@@ -1,27 +1,18 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import TimeEntryForm from './ct-time-form'
+import TimeEntryGrid from './ctm-time-grid'
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
-
-import {formatCurrency, getAPI_endpoint} from './ct-utils';
+import {convertSimpleDate, getTodaysDate, formatCurrency, getAPI_endpoint} from './ctm-utils';
 const apiHost = getAPI_endpoint()
 const lodash = require('lodash');
 
-function getTodaysDate() {
-
-          var today = new Date();
-          var dd = today.getDate();
-          var mm = today.getMonth()+1; //January is 0!
-          var yyyy = today.getFullYear();
-          if (dd<10){  dd='0'+dd }
-          if(mm<10){   mm='0'+mm }
-          today = yyyy+'-'+mm+'-'+dd;
-          return today
-}
 
 
 
-class TimeEntryPage extends Component {
+class TimeGridPage extends Component {
 
       constructor (props) {
           super(props)
@@ -29,16 +20,22 @@ class TimeEntryPage extends Component {
 
           this.state = {
                 worker_link: null,
-                selected_worker: {},
+                selected_worker: {
+                    id: 0,
+                    first: "Could not Find",
+                    last: "Matching Person"
+                },
                 all_properties: [],
-                work_date: null
+                work_date: getTodaysDate()
 
          }
+         this.handleDayChange = this.handleDayChange.bind(this);
+
+
      }
 
 
 async componentDidMount ()  {
-
 
 
         //console.log("URL deets:" + JSON.stringify(this.props.match))
@@ -55,23 +52,40 @@ async componentDidMount ()  {
           fetch(fetchURL_worker)
            .then(results => results.json())
            .then(data =>  {
-                  this.setState({ selected_worker: data})
+                          this.setState({ selected_worker: data})
             })
 
 
   } //CDM
 
 
+  handleDayChange(selectedDay) {
+     console.log ("raw date is "+JSON.stringify(selectedDay));
+     this.setState({
+          work_date : convertSimpleDate(selectedDay),
+          //selected_day: selectedDay
+     });
+   }
+
+
+
+
+
 
   render() {
+
         return (
                           <div className = "outer-div">
                               <div className = "indent-div">
-                              {this.state.work_date}
+                              <DayPickerInput
+                                      onDayChange={this.handleDayChange}
+                                      value = {this.state.work_date}
+                                      inputProps={{ className: "hidden-date-input" }}
+                                      />
                               <p className = "prom-name">
                               {this.state.selected_worker.first+" "+ this.state.selected_worker.last}
                               </p>
-                              <TimeEntryForm work_date={this.state.work_date} worker={this.state.selected_worker}/>
+                              {(this.state.selected_worker.id !=0) && <TimeEntryGrid work_date={this.state.work_date} worker={this.state.selected_worker}/>}
                               </div>
                           </div>
 
@@ -86,10 +100,7 @@ async componentDidMount ()  {
 
 
 
-
-
-
-export default TimeEntryPage;
+export default TimeGridPage;
 
 
 

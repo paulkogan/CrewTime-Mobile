@@ -9,11 +9,9 @@ const WorkerItem = (props) => {
       return (
 
                <tr>
-                    <td  width="40%">  {first + " " +last} </td>
+                    <td  width="30%">  {first + " " +last} </td>
                     <td  width="10%"> &nbsp; </td>
-                    <td width="20%"> <Link to={"/timeentry/"+ link}> {"Single Form"} </Link> </td>
-                    <td  width="10%"> &nbsp; </td>
-                    <td width="20%"> <Link to={"/timegrid/"+ link}> {"Grid"} </Link> </td>
+                    <td width="20%"> <Link to={"/timegrid/"+ link}>  Time Entry Grid </Link> </td>
                 </tr>
 
       )

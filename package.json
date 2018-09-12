@@ -1,7 +1,7 @@
 {
   "name": "React-Boiler-Plate-2",
   "version": "1.0.0",
-  "description": "React-Boiler",
+  "description": "CTM",
   "main": "bundle.js",
   "scripts": {
     "live-server-NO-WEBPACK": "live-server ./public",

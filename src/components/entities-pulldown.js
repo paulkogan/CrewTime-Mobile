@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {formatCurrency} from './ct-utils';
+import {formatCurrency} from './ctm-utils';
 
 
 

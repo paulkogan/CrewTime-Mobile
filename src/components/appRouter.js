@@ -3,10 +3,8 @@ import React, {} from "react";
 import {BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
 import Header, {} from "./header"
 import HomePage, {} from "./home-page.js"
-import WorkersListPage, {} from "./ct-workers-list-page"
-import TimeEntryPage, {} from "./ct-timeentry-page"
-import TimeGridPage, {} from "./ct-timegrid-page"
-import ChangeDateCal, {} from "./ct-change-date-calendar"
+import WorkersListPage, {} from "./ctm-workers-list-page"
+import TimeGridPage, {} from "./ctm-timegrid-page"
 
 
 const notFoundPage = () => {
@@ -29,9 +27,7 @@ const AppRouter = () => (
           <Switch>
               <Route path = "/" component = {HomePage} exact={true}/>
               <Route path = "/workers" component = {WorkersListPage} />
-              <Route path = "/timeentry/:link" component = {TimeEntryPage} />
               <Route path = "/timegrid/:link" component = {TimeGridPage} />
-              <Route path = "/changedate" component = {ChangeDateCal} />
               <Route component = {notFoundPage} />
           </Switch>
           </div>

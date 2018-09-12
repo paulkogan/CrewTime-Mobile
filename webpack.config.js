@@ -4,7 +4,7 @@ const path = require('path');
 const outputPath = path.join(__dirname, 'public');
 
 module.exports = {
-    entry: ["babel-polyfill","./src/ct.js"],
+    entry: ["babel-polyfill","./src/ctm.js"],
     mode: 'development',
     output: {
       path: path.join(__dirname, 'public'),

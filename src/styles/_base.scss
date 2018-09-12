@@ -20,8 +20,11 @@ button:focus {
 
 
 .hidden-date-input {
-      border: none;
       background-color: lightslategrey;
+      border: 1px solid lightsteelblue;
+      text-align: center;
+      width: 100px;
+
 
 
 }
@@ -47,6 +50,26 @@ button:focus {
     cursor: pointer;
 
 }
+
+
+
+.small-button-remove {
+    line-height: 12px;
+    background: none;
+    border: 1px solid;
+    color: lightsteelblue;
+    font-size: 10px;
+    height: 20px;
+    width: 30px;
+    border-radius:4px;
+    margin-left: 0px;
+    margin-bottom: 2px;
+    padding-bottom: 0px;
+    text-align: center;
+
+}
+
+
 
 .big-button:active {
     background: slateblue;
@@ -162,22 +185,6 @@ tr:nth-child(even) {
 
 }
 
-
-.small-button-remove {
-    line-height: 12px;
-    background: none;
-    border: 1px solid;
-    color: lightsteelblue;
-    font-size: 10px;
-    height: 20px;
-    width: 30px;
-    border-radius:4px;
-    margin-left: 0px;
-    margin-bottom: 2px;
-    padding-bottom: 0px;
-    text-align: center;
-
-}
 
 
 .grid-border{

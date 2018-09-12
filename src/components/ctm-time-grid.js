@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import EntitiesPulldown from './entities-pulldown'
-import NewTimesList from './ct-newtimes-list'
+import NewTimesList from './ctm-newtimes-list'
 import {formatCurrency,
        getAPI_endpoint,
        getTodaysDate,
        getCurrentTime,
-       getTimeZoneOffset
-     } from './ct-utils';
+       getTimeZoneOffset,
+       getVersion
+     } from './ctm-utils';
 
 
 const apiHost = getAPI_endpoint();
@@ -198,7 +199,9 @@ async handleFormSubmit(event) {
                         unit_id : te.unit_id,
                         work_date : this.props.work_date,
                         work_hours : te.work_hours,
-                        notes:  "from CT Mobile Grid on "+todaysDate+" at "+currentTime+" GMT +"+timeZoneOffset
+                        time_stamp : getCurrentTime(),
+                        date_stamp : getTodaysDate(),
+                        notes:  "from CT Mobile "+getVersion()
                 }
 
                 console.log("Ready to POST new Time Entry "+JSON.stringify(newTimeEntry,null,4))

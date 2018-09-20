@@ -10,13 +10,14 @@ import {BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
 
 
 const TimeRow = (props) => {
-      const {property_name, unit_name, work_hours} = props.timeEntry;
+      const {property_name, unit_name, work_hours, is_overtime} = props.timeEntry;
       return (
 
                <tr>
                       <td className="col-4"> {property_name} </td>
-                      <td className="col-3"> {unit_name} </td>
-                      <td className="col-3"> {work_hours} hrs </td>
+                      <td className="col-2"> {unit_name} </td>
+                      <td className="col-1"> {(is_overtime)?"OT":" "} </td>
+                      <td className="col-2"> {work_hours} hrs </td>
                       <td className="col-2">
                       <button
                               className = "small-button-remove"

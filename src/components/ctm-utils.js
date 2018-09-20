@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 export function getVersion() {
 
-          return "5.6"
+          return "5.10"
 
 }
 

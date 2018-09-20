@@ -39,7 +39,8 @@ constructor(props) {
           hours_4picklist: [],
           selected_hour_id: 0,
           time_entries: [],
-          total_hours:0
+          total_hours:0,
+          is_overtime: false
 
     };
 
@@ -71,7 +72,7 @@ constructor(props) {
     let props_4picklist = all_properties.map(property => {
             return {
               id: property.id,
-              name:property.name.slice(0,15),
+              name:property.name.slice(0,16),
             }
 
     }) //map
@@ -144,7 +145,8 @@ async handleChange(event) {
                       unit_id : this.state.selected_unit_id,
                       work_hours : this.state.selected_hour_id,
                       property_name: this.state.selected_prop_name,
-                      unit_name: this.state.selected_unit_name
+                      unit_name: this.state.selected_unit_name,
+                      is_overtime: this.state.selected_overtime,
               }
 
 
@@ -160,7 +162,7 @@ async handleChange(event) {
 
              console.log("Total Hours is "+ allHours)
 
-
+             //reset state
              await this.setState({
                 time_entries: timesArr,
                 selected_prop: null,
@@ -171,7 +173,8 @@ async handleChange(event) {
                 selected_unit_id: 0,
                 selected_unit_name: "",
                 selected_hour_id: 0,
-                total_hours:allHours
+                total_hours:allHours,
+                selected_overtime: false
               });
 
 
@@ -201,6 +204,7 @@ async handleFormSubmit(event) {
                         work_hours : te.work_hours,
                         time_stamp : getCurrentTime(),
                         date_stamp : getTodaysDate(),
+                        is_overtime: (te.is_overtime) ? te.is_overtime : false,
                         notes:  "from CT Mobile "+getVersion()
                 }
 
@@ -233,7 +237,8 @@ async handleFormSubmit(event) {
           selected_unit_id: 0,
           selected_unit_name: "",
           selected_hour_id: 0,
-          total_hours:0
+          total_hours:0,
+          selected_overtime: false
         });
 
 
@@ -278,8 +283,8 @@ async deleteTE(teIndex) {
                              <tbody>
                              <tr className = "head-tr">
                                     <td className="col-2"> </td>
-                                    <td className="col-4"> <u>Total: </u></td>
-                                    <td className="col-3" colSpan="3"> <u>{this.state.total_hours} hrs. </u></td>
+                                    <td className="col-4"> Total: </td>
+                                    <td className="col-3" colSpan="3"> {this.state.total_hours} hrs. </td>
                                     <td className="col-1"> </td>
 
 
@@ -304,10 +309,21 @@ async deleteTE(teIndex) {
 
                            <div>
                            <table className="g-table" width = "100%">
+                           <colgroup>
+                               <col width="25%" />
+                               <col width="23%" />
+                               <col width="20%" />
+                               <col width="20%" />
+                               <col width="2%" />
+                           </colgroup>
+
+
+
+
                                <tbody>
                                 <tr>
 
-                                        <td className="col-3">
+                                        <td className="col-2">
                                             <EntitiesPulldown
                                                     itemList = {this.state.props_4picklist}
                                                     selectedItem = {this.state.selected_prop_id}
@@ -320,7 +336,7 @@ async deleteTE(teIndex) {
 
 
 
-                                    <td className="col-3">
+                                    <td className="col-2">
                                             <EntitiesPulldown
                                                     itemList = {this.state.units_4picklist}
                                                     selectedItem = {this.state.selected_unit_id}
@@ -328,6 +344,23 @@ async deleteTE(teIndex) {
                                                     target = {"selected_unit_id"}
                                              />
                                       </td>
+
+
+
+                                      <td className="col-2">
+                                            <EntitiesPulldown
+                                                    itemList = {[
+                                                          {id:false, name: "Reg.Hrs" },
+                                                          {id:true, name: "Overtime" }
+                                                      ]}
+                                                    selectedItem = {this.state.selected_overtime}
+                                                    handleChangeCB = {this.onChange}
+                                                    target = {"selected_overtime"}
+                                            />
+                                       </td>
+
+
+
 
 
                                       <td className="col-2">
@@ -341,7 +374,7 @@ async deleteTE(teIndex) {
 
 
                                       <td className="col-1">
-
+                                      &nbsp;
                                         </td>
 
 
@@ -374,20 +407,3 @@ async deleteTE(teIndex) {
 
 
 export default TimeEntryGrid;
-
-
-
-
-// deleteTE(teIndex) {
-//       event.preventDefault();
-//
-//
-//
-//        this.setState( (prevState) => {
-//                       //return a new array containg all excepy the option you want to delete
-//            return {time_entries : prevState.time_entries.filter((index) => index != teIndex)}
-//
-//        }) //setstate
-//       //this.setState( {options : localOptions} )
-//
-// } //deleteTE

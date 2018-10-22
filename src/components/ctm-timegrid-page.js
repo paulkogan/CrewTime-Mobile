@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import TimeEntryGrid from './ctm-time-grid'
+import RecentTimeEntriesList from './ctm-recent-timeentries-list'
+
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -25,19 +27,29 @@ class TimeGridPage extends Component {
                     first: "Could not Find",
                     last: "Matching Person"
                 },
-                all_properties: [],
-                work_date: getTodaysDate()
+                work_date: getTodaysDate(),
+                time_entries: [],
+                grid_mounted: false,
+                show_entry_form: true
 
          }
-         this.handleDayChange = this.handleDayChange.bind(this);
+          this.handleDayChange = this.handleDayChange.bind(this);
+          this.handleViewChange = this.handleViewChange.bind(this);
+          this.getTimeEntriesForWorker = this.getTimeEntriesForWorker.bind(this);
+          this.confirmGridHasMountedCB = this.confirmGridHasMountedCB.bind(this);
 
 
      }
 
+async componentWillMount() {
+          await this.setState({
+               grid_mounted: false
+          });
+
+}
+
 
 async componentDidMount ()  {
-
-
         //console.log("URL deets:" + JSON.stringify(this.props.match))
         await this.setState({
           worker_link: this.props.match ? this.props.match.params.link : (this.props.nlink ? this.props.nlink : null),
@@ -45,7 +57,7 @@ async componentDidMount ()  {
         });
 
         const fetchURL_worker = apiHost + "/api/getworkerbylink/"+this.state.worker_link;
-
+        this.getTimeEntriesForWorker();
 
         //see the new-transactions for for async-await version of multi-fetch
 
@@ -55,8 +67,22 @@ async componentDidMount ()  {
                           this.setState({ selected_worker: data})
             })
 
+            console.log('Grid-Page did mount.');
 
   } //CDM
+
+
+  getTimeEntriesForWorker() {
+
+            const fetchURL_timeentries = apiHost + "/api/gettimeentriesforworker/"+this.state.selected_worker.id;
+            fetch(fetchURL_timeentries)
+             .then(results => results.json())
+             .then(data =>  {
+                            this.setState({ time_entries: data})
+              })
+
+  }
+
 
 
   handleDayChange(selectedDay) {
@@ -65,10 +91,40 @@ async componentDidMount ()  {
           work_date : convertSimpleDate(selectedDay),
           //selected_day: selectedDay
      });
+
    }
 
+   async handleViewChange(selectedDay) {
+      console.log ("changing view state to: "+!this.state.show_entry_form) //npt reeliable
+      await this.getTimeEntriesForWorker();
+      await this.setState({
+           show_entry_form : !this.state.show_entry_form
+      });
+      console.log ("actual view-form state after change is: "+this.state.show_entry_form)
 
 
+      //if actually going back to form, clear mounted flag
+      if (this.state.show_entry_form === true) {
+
+        await this.setState({
+             grid_mounted: false
+        });
+        console.log ("Handle View Change, going to TEs, switch mounted flag to FALSE but because its async its still shows: "+!this.state.grid_mounted)
+
+      }
+
+
+    }
+
+
+
+
+    confirmGridHasMountedCB() {
+       this.setState({
+            grid_mounted: true
+       });
+
+     }
 
 
 
@@ -85,8 +141,23 @@ async componentDidMount ()  {
                               <p className = "prom-name">
                               {this.state.selected_worker.first+" "+ this.state.selected_worker.last}
                               </p>
-                              {(this.state.selected_worker.id !=0) && <TimeEntryGrid work_date={this.state.work_date} worker={this.state.selected_worker}/>}
+
+                                <div align="right">
+                                {(this.state.grid_mounted) ?
+                                    <button className="view-button"
+                                         onClick={this.handleViewChange}>{this.state.show_entry_form ? "Show My Time Entries": "Back to New Time Form" }
+                                   </button>
+                                   :  <br/>
+                                }
+                                </div>
+                              {(this.state.selected_worker.id !=0 && this.state.time_entries) &&
+                                      (this.state.show_entry_form ?
+                                <TimeEntryGrid work_date={this.state.work_date} worker={this.state.selected_worker} confirmGridHasMountedCB={this.confirmGridHasMountedCB}/>
+                                : <RecentTimeEntriesList recent_time_entries = {this.state.time_entries} />
+                                      )
+                              }
                               </div>
+
                           </div>
 
 
@@ -102,10 +173,18 @@ async componentDidMount ()  {
 
 export default TimeGridPage;
 
-
+//this.state.time_entries.length >0  &&
 
 
 // <DealFinancialsComponent
 //       entityID = {this.state.target_entity_id}
 //       dealFinancials = {this.state.deal_financials}
 // />
+
+
+// {this.state.time_entries.length}
+// <br/>
+// {"has mounted?"+JSON.stringify(this.state.grid_mounted)}
+// <br/>
+// {"show form?"+JSON.stringify(this.state.show_entry_form)}
+// <br/>

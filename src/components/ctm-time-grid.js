@@ -63,7 +63,7 @@ constructor(props) {
 
     })
 
-
+    //gets all propetties
     const fetchURL_allprops = apiHost + "/api/getallproperties"
     const prop_results = await fetch(fetchURL_allprops);
     const all_properties = await prop_results.json()
@@ -80,7 +80,8 @@ constructor(props) {
     hours_4picklist.splice(0, 0, {id:0, name:  menuPrompt })
 
     await this.setState({ props_4picklist, hours_4picklist })
-
+    //console.log('Grid did mount.');
+    this.props.confirmGridHasMountedCB()
 
   }
 
@@ -310,11 +311,11 @@ async deleteTE(teIndex) {
                            <div>
                            <table className="g-table" width = "100%">
                            <colgroup>
-                               <col width="25%" />
                                <col width="23%" />
+                               <col width="23%" />
+                               <col width="25%" />
                                <col width="20%" />
-                               <col width="20%" />
-                               <col width="2%" />
+                               <col width="3%" />
                            </colgroup>
 
 
@@ -386,7 +387,7 @@ async deleteTE(teIndex) {
                            <div className="div-center">
                            {this.state.total_hours>0 &&
                                  <button className="time-button"
-                                      onClick={this.onSubmit}>Submit {this.state.time_entries.length} Work Time(s)
+                                      onClick={this.onSubmit}>Submit {this.state.time_entries.length} Time Entry(s)
                                 </button>}
                            </div>
                            <br/>

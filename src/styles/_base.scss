@@ -31,6 +31,14 @@ button:focus {
   outline:0;
 }
 
+.view-button {
+    background-color: lightgrey;
+    color: black;
+    border: 2px solid black;
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+
+}
 
 
 
@@ -133,8 +141,8 @@ button:focus {
 
 
 td {
-     border: 1px solid green;
-     padding: 5px;
+     border: 0px solid blue;
+     padding: 3px;
 }
 
 tr:nth-child(even) {
@@ -168,6 +176,13 @@ tr:nth-child(even) {
 
 }
 
+.col-2-small {
+  width: 20px;
+  font-size: 14px;
+  text-align: center;
+
+}
+
 .col-3 {
   width: 30px;
   text-align: center;
@@ -176,7 +191,7 @@ tr:nth-child(even) {
 
 
 .col-4 {
-  width: 40px;
+  width: 50px;
   text-align: center;
 
 

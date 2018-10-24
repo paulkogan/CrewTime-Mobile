@@ -23,7 +23,6 @@ const AppRouter = () => (
     <div>
           <Header />
           <div className="center_container">
-          <br/>
           <Switch>
               <Route path = "/" component = {HomePage} exact={true}/>
               <Route path = "/workers" component = {WorkersListPage} />

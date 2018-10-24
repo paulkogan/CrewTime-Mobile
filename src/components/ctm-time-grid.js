@@ -193,6 +193,7 @@ async handleFormSubmit(event) {
 
 
       const fetchURL_sendTE = apiHost + "/process-web-newtime";
+      let submitResultsMessage = " ";
 
       let timesArr = this.state.time_entries
       timesArr.forEach( async (te) => {
@@ -221,26 +222,56 @@ async handleFormSubmit(event) {
                              }
 
                  })
-                 .then( () => console.log("Posted new TimeEntry  "));
+                 .then((response) => {
+                        console.log("Response Status is "+response.status)
+                        if (response.ok && response.status === 200) {
+                              console.log("Response 200")
+                              submitResultsMessage = "Success! You added "+timesArr.length+" new work time(s)."
+
+                              //clear TimeEntries
+                              this.setState({
+                                 time_entries: [],
+                                 selected_prop: null,
+                                 selected_prop_id: 0,
+                                 selected_prop_name: "",
+                                 units_4picklist: [{id:0, name: "-----"}],
+                                 selected_unit: null,
+                                 selected_unit_id: 0,
+                                 selected_unit_name: "",
+                                 selected_hour_id: 0,
+                                 total_hours:0,
+                                 selected_overtime: false
+                               });
+
+                               return response.text()
+
+                        } else {
+                             submitResultsMessage = "Problems adding your TimeEntries. Network ok? Try again. ("+response.status+")"
+                             return response.text();
+                        }
+
+
+
+                 })
+                  .then((data) => {
+                           console.log("Here is the response from the Database: "+data)
+                           this.props.setNewMessage(submitResultsMessage)
+
+                  })
+                 .catch((error) => {
+                           console.log("Catching TimeEntry ERROR "+error)
+                           //console.log("Response Status is"+response.status)
+                           submitResultsMessage = (" Submit errors. Pls. check your network and try again.")
+                           this.props.setNewMessage(submitResultsMessage)
+                  })
+
+
 
       })  //forEach
 
-       //CLEAR State
 
 
-       this.setState({
-          time_entries: [],
-          selected_prop: null,
-          selected_prop_id: 0,
-          selected_prop_name: "",
-          units_4picklist: [{id:0, name: "-----"}],
-          selected_unit: null,
-          selected_unit_id: 0,
-          selected_unit_name: "",
-          selected_hour_id: 0,
-          total_hours:0,
-          selected_overtime: false
-        });
+
 
 
 }  //handle form submit
@@ -408,3 +439,19 @@ async deleteTE(teIndex) {
 
 
 export default TimeEntryGrid;
+
+
+//                  if(response.ok){
+                  //     console.log("POST -- SUCCESSS")
+                  //     // console.log("Raw Response is "+response)
+                  //      console.log("Response Status is "+response.status)
+                  //     // console.log("Response.text is "+response.text())
+                  //     //console.log("Response BLOB s "+response.blob())
+                  //     const statusCode = response.status;
+                  //     const data = response.json();
+                  //     return Promise.all([statusCode, data]);
+                  // }else {
+                  //     console.log("POST -- SOMETHING WENT WRONG")
+                  //     throw new Error(response.status);
+                  //     //this.setState({ requestFailed: true })
+                  // }

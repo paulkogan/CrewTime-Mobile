@@ -30,23 +30,18 @@ class TimeGridPage extends Component {
                 work_date: getTodaysDate(),
                 time_entries: [],
                 grid_mounted: false,
-                show_entry_form: true
+                show_entry_form: true,
+                status_message: "Please add your work hours."
 
          }
           this.handleDayChange = this.handleDayChange.bind(this);
           this.handleViewChange = this.handleViewChange.bind(this);
           this.getTimeEntriesForWorker = this.getTimeEntriesForWorker.bind(this);
           this.confirmGridHasMountedCB = this.confirmGridHasMountedCB.bind(this);
-
+          this.setNewMessage = this.setNewMessage.bind(this);
 
      }
 
-async componentWillMount() {
-          await this.setState({
-               grid_mounted: false
-          });
-
-}
 
 
 async componentDidMount ()  {
@@ -64,7 +59,10 @@ async componentDidMount ()  {
           fetch(fetchURL_worker)
            .then(results => results.json())
            .then(data =>  {
-                          this.setState({ selected_worker: data})
+                          this.setState({
+                                selected_worker: data,
+                                status_message: "Hello "+data.first+"! Please enter your hours."
+                          })
             })
 
             console.log('Grid-Page did mount.');
@@ -98,9 +96,10 @@ async componentDidMount ()  {
       console.log ("changing view state to: "+!this.state.show_entry_form) //npt reeliable
       await this.getTimeEntriesForWorker();
       await this.setState({
-           show_entry_form : !this.state.show_entry_form
+           show_entry_form : !this.state.show_entry_form,
+           status_message: " "
       });
-      console.log ("actual view-form state after change is: "+this.state.show_entry_form)
+    //console.log ("actual view-form state after change is: "+this.state.show_entry_form)
 
 
       //if actually going back to form, clear mounted flag
@@ -109,14 +108,12 @@ async componentDidMount ()  {
         await this.setState({
              grid_mounted: false
         });
-        console.log ("Handle View Change, going to TEs, switch mounted flag to FALSE but because its async its still shows: "+!this.state.grid_mounted)
+        //console.log ("Handle View Change, going to TEs, switch mounted flag to FALSE but because its async its still shows: "+!this.state.grid_mounted)
 
       }
 
 
     }
-
-
 
 
     confirmGridHasMountedCB() {
@@ -127,17 +124,30 @@ async componentDidMount ()  {
      }
 
 
+setNewMessage(message) {
+        this.setState({
+             status_message: message
+        });
+
+      }
+
+
 
   render() {
 
         return (
                           <div className = "outer-div">
                               <div className = "indent-div">
-                              <DayPickerInput
-                                      onDayChange={this.handleDayChange}
-                                      value = {this.state.work_date}
-                                      inputProps={{ className: "hidden-date-input" }}
-                                      />
+                              <div className = "same-line-div">
+                                    <DayPickerInput
+                                          onDayChange={this.handleDayChange}
+                                          value = {this.state.work_date}
+                                          inputProps={{ className: "hidden-date-input" }}
+                                          />
+                                          <div className = "message-div">
+                                          {this.state.status_message}
+                                          </div>
+                              </div>
                               <p className = "prom-name">
                               {this.state.selected_worker.first+" "+ this.state.selected_worker.last}
                               </p>
@@ -152,7 +162,12 @@ async componentDidMount ()  {
                                 </div>
                               {(this.state.selected_worker.id !=0 && this.state.time_entries) &&
                                       (this.state.show_entry_form ?
-                                <TimeEntryGrid work_date={this.state.work_date} worker={this.state.selected_worker} confirmGridHasMountedCB={this.confirmGridHasMountedCB}/>
+                                <TimeEntryGrid
+                                        work_date={this.state.work_date}
+                                        worker={this.state.selected_worker}
+                                        confirmGridHasMountedCB={this.confirmGridHasMountedCB}
+                                        setNewMessage = {this.setNewMessage}
+                                />
                                 : <RecentTimeEntriesList recent_time_entries = {this.state.time_entries} />
                                       )
                               }

@@ -31,7 +31,9 @@ class TimeGridPage extends Component {
                 time_entries: [],
                 grid_mounted: false,
                 show_entry_form: true,
-                status_message: "Please add your work hours."
+                status_message: "",
+                disclaimer: "Disclaimer: The CrewTime App is meant for GP Properties contractors, vendors and suppliers to submit work hours for faster"
+                +" billing and payment. A formal invoice must also be submitted for any work performed. GP Properties employees should not use this app."
 
          }
           this.handleDayChange = this.handleDayChange.bind(this);
@@ -171,8 +173,13 @@ setNewMessage(message) {
                                 : <RecentTimeEntriesList recent_time_entries = {this.state.time_entries} />
                                       )
                               }
+                              <div className = "disclaimer-div">
+                                    <br/>
+                                    {this.state.disclaimer}
                               </div>
 
+
+                              </div>
                           </div>
 
 

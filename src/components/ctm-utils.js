@@ -3,18 +3,18 @@ import React, {Component} from 'react';
 
 export function getVersion() {
 
-          return "5.15"
+          return "5.17"
 
 }
 
 export function getAPI_endpoint() {
           //let current_ENV = process.env.NODE_ENV;
 
-        let current_ENV = 'production';
-      //let current_ENV = 'development';
+        //let current_ENV = 'production';
+      let current_ENV = 'development';
 
         if (current_ENV  === 'production')  {
-                 return "http://crew-time.us-east-2.elasticbeanstalk.com"
+                 return "http://crewtime-env.bmpuyzw3gd.us-east-2.elasticbeanstalk.com"
         } else {
                  return "http://localhost:8081"
         }
